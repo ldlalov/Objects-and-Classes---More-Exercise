@@ -6,14 +6,29 @@ namespace _02._Oldest_Family_Member
 {
     class Family
     {
-        public List<Person> people = new List<Person>();
-        public void AddMember()
+        public Family()
         {
-
+            this.People = new List<Person>();
+        }
+        public List<Person> People { get; set; }
+        
+        public void AddMember(Person person)
+        {
+                People.Add(person);
         }
         public Person GetOldestMember()
         {
-            return Person;
+            Person oldestMember = new Person();
+            int maxAge = int.MinValue;
+            foreach (Person person in People)
+            {
+                if (person.Age>maxAge)
+                {
+                    maxAge = person.Age;
+                    oldestMember = person;
+                }
+            }
+            return oldestMember;
         }
     }
     class Person
@@ -25,7 +40,18 @@ namespace _02._Oldest_Family_Member
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Family family = new Family();
+            int countOfPeople = int.Parse(Console.ReadLine());
+            for (int i = 0; i < countOfPeople; i++)
+            {
+                string[] input = Console.ReadLine().Split(' ');
+                string name = input[0];
+                int age = int.Parse(input[1]);
+                Person person = new Person { Name = name, Age = age};
+                family.AddMember(person);
+            }
+            Person oldest = family.GetOldestMember();
+            Console.WriteLine($"{oldest.Name} {oldest.Age}");
         }
     }
 }
