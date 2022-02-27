@@ -27,14 +27,14 @@ namespace _04._Raw_Data
     {
         public Engine()
         {
-
+            this.Engines = new List<Engine>();
         }
         public Engine(int engineSpeed, int enginePower)
         {
             this.EngineSpeed = engineSpeed;
             this.EnginePower = enginePower;
         }
-
+        public List<Engine> Engines { get; set; }
         public int EngineSpeed { get; set; }
         public int EnginePower { get; set; }
     }
