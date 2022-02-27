@@ -11,27 +11,23 @@ namespace _04._Raw_Data
             this.Cars = new List<Car>();
 
         }
-        public Car(string model, int engineSpeed, int enginePower, int cargoWieght, string cargoType)
+        public Car(string model, Engine engine, Cargo cargo)
         {
-            this.EngineSpeed = engineSpeed;
-            this.EnginePower = enginePower;
-            this.CargoWeight = cargoWieght;
-            this.CargoType = cargoType;
-            Model = model;
+            this.Model = model;
+            this.Engine = engine;
+            this.Cargo = cargo;
 
         }
         public string Model { get; set; }
-        public int EngineSpeed { get; set; }
-        public int EnginePower { get; set; }
-        public int CargoWeight { get; set; }
-        public string CargoType { get; set; }
+        public Engine Engine { get; set; }
+        public Cargo Cargo { get; set; }
         public List<Car> Cars { get; set; }
     }
     class Engine
     {
         public Engine()
         {
-            this.Engines = new List<Engine>();
+
         }
         public Engine(int engineSpeed, int enginePower)
         {
@@ -39,7 +35,6 @@ namespace _04._Raw_Data
             this.EnginePower = enginePower;
         }
 
-        public List<Engine> Engines { get; set; }
         public int EngineSpeed { get; set; }
         public int EnginePower { get; set; }
     }
@@ -74,11 +69,10 @@ namespace _04._Raw_Data
                 int enginePower = int.Parse(input[2]);
                 int cargoWeight = int.Parse(input[3]);
                 string cargoType = input[4];
-                Engine currEngine = new Engine(engineSpeed,enginePower);
-                engine.Engines.Add(currEngine);
-                Cargo currCargo = new Cargo(cargoWeight,cargoType);
+                Engine currEngine = new Engine(engineSpeed, enginePower);
+                Cargo currCargo = new Cargo(cargoWeight, cargoType);
                 cargo.Cargos.Add(currCargo);
-                Car currenCar = new Car(model, currEngine.EngineSpeed,currEngine.EnginePower,currCargo.CargoWeight,currCargo.CargoType);
+                Car currenCar = new Car(model, currEngine, currCargo);
                 car.Cars.Add(currenCar);
             }
             string command = Console.ReadLine();
@@ -87,14 +81,14 @@ namespace _04._Raw_Data
                 List<Car> fragile = new List<Car>();
                 foreach (Car item in car.Cars)
                 {
-                    if (item.CargoType == "fragile" && item.CargoWeight < 1000)
+                    if (item.Cargo.CargoType == "fragile" && item.Cargo.CargoWeight < 1000)
                     {
                         fragile.Add(item);
                     }
                 }
-                foreach(Car item in fragile)
+                foreach (Car item in fragile)
                 {
-                Console.WriteLine($"{item.Model}");
+                    Console.WriteLine($"{item.Model}");
                 }
             }
 
@@ -103,7 +97,7 @@ namespace _04._Raw_Data
                 List<Car> flamable = new List<Car>();
                 foreach (Car item in car.Cars)
                 {
-                    if (item.CargoType == "flamable" && item.EnginePower > 250)
+                    if (item.Cargo.CargoType == "flamable" && item.Engine.EnginePower > 250)
                     {
                         flamable.Add(item);
                     }
@@ -113,7 +107,6 @@ namespace _04._Raw_Data
                     Console.WriteLine($"{item.Model}");
                 }
             }
-
         }
     }
 }
